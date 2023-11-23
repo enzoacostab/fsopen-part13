@@ -1,17 +1,15 @@
-require('dotenv').config()
-const { Sequelize, QueryTypes } = require('sequelize')
+import 'dotenv/config'
+import './models/Blog.js'
+import { sequelize } from './db.js'
+import { QueryTypes } from 'sequelize'
+import app from './app.js'
 
-const sequelize = new Sequelize(process.env.POSTGRES_DB, process.env.POSTGRES_USER, process.env.POSTGRES_PASS, {
-  dialect: 'postgres',
-  host: process.env.POSTGRES_HOST
-})
- 
 const main = async () => {
   try {
-    await sequelize.authenticate()
-    const blogs = await sequelize.query("SELECT * FROM blogs", { type: QueryTypes.SELECT })
+    await sequelize.sync({ force: false })
+    const blogs = await sequelize.query('SELECT * FROM blogs', { type: QueryTypes.SELECT })
     blogs.forEach(blog => console.log(`${blog.author}: "${blog.title}", ${blog.like} likes`))
-    sequelize.close()
+    app.listen(3000)
   } catch (error) {
     console.error('Unable to connect to the database:', error)
   }
