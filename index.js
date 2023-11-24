@@ -8,7 +8,7 @@ const main = async () => {
   try {
     await sequelize.sync({ force: false })
     const blogs = await sequelize.query('SELECT * FROM blogs', { type: QueryTypes.SELECT })
-    blogs.forEach(blog => console.log(`${blog.author}: "${blog.title}", ${blog.like} likes`))
+    blogs.forEach(blog => console.log(`${blog.author}: "${blog.title}", ${blog.likes} likes`))
     app.listen(3000)
   } catch (error) {
     console.error('Unable to connect to the database:', error)
