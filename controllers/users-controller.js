@@ -9,6 +9,7 @@ export const getUsers = async (req, res, next) => {
         model: Blog
       }
     })
+
     res.json(users)
   } catch (error) {
     next(error)
@@ -25,6 +26,7 @@ export const createUser = async (req, res, next) => {
       username,
       passwordHash
     })
+
     res.json(user)
   } catch (error) {
     next(error)
@@ -41,8 +43,10 @@ export const updateUser = async (req, res, next) => {
         username
       }
     })
+
     user.username = newUsername
     await user.save()
+
     res.json(user)
   } catch (error) {
     next(error)
