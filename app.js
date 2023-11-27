@@ -1,22 +1,14 @@
 import express from 'express'
-import router from './routes/blogs-routes.js'
+import blogsRouter from './routes/blogs-routes.js'
+import usersRouter from './routes/users-routes.js'
+import loginRouter from './routes/login-routes.js'
+import { errorHandler, userExtractor } from './utils/middleware.js'
 
 const app = express()
-
 app.use(express.json())
-
-app.use(router)
-
-const errorHandler = (error, req, res, next) => {
-  console.error(error.message)
-
-  if (error.name === 'CastError') {
-    return res.status(400).send({ error: 'malformatted id' })
-  }
-
-  next(error)
-}
-
+app.use(loginRouter)
+app.use(usersRouter)
+app.use(userExtractor, blogsRouter)
 app.use(errorHandler)
 
 export default app

@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import './models/Blog.js'
+import './models/User.js'
 import { sequelize } from './db.js'
 import { QueryTypes } from 'sequelize'
 import app from './app.js'

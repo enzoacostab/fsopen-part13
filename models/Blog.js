@@ -1,7 +1,7 @@
 import { sequelize } from '../db.js'
 import { DataTypes } from 'sequelize'
 
-export const Blog = sequelize.define('blogs', {
+const Blog = sequelize.define('blogs', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -25,3 +25,5 @@ export const Blog = sequelize.define('blogs', {
 }, {
   timestamps: false
 })
+
+export default Blog

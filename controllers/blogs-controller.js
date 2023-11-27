@@ -1,8 +1,15 @@
-import { Blog } from '../models/Blog.js'
+import Blog from '../models/Blog.js'
+import User from '../models/User.js'
 
 export const getBlogs = async (req, res, next) => {
   try {
-    const blogs = await Blog.findAll()
+    const blogs = await Blog.findAll({
+      attributes: { exclude: ['userId'] },
+      include: {
+        model: User,
+        attributes: ['name']
+      }
+    })
     res.json(blogs)
   } catch (error) {
     next(error)
@@ -13,7 +20,9 @@ export const createBlog = async (req, res, next) => {
   const { title, author, url, likes } = req.body
 
   try {
+    const user = req.user
     const newBlog = await Blog.create({
+      userId: user.id,
       title,
       author,
       url,
@@ -27,6 +36,11 @@ export const createBlog = async (req, res, next) => {
 
 export const deleteBlog = async (req, res, next) => {
   const { id } = req.params
+  const { userId } = await Blog.findByPk(id)
+
+  if (req.user.id !== userId) {
+    return res.status(401).json({ error: 'authorization error' })
+  }
 
   try {
     await Blog.destroy({
