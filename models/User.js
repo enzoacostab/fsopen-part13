@@ -1,5 +1,5 @@
-import { sequelize } from '../db.js'
-import { DataTypes } from 'sequelize'
+import { sequelize } from '../util/db.cjs'
+import { DataTypes, Sequelize } from 'sequelize'
 import Blog from './Blog.js'
 
 const User = sequelize.define('users', {
@@ -23,6 +23,16 @@ const User = sequelize.define('users', {
   passwordHash: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  createdAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+  },
+  updatedAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
   }
 })
 

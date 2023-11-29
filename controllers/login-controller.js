@@ -1,6 +1,8 @@
 import User from '../models/User.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import pkg from '../util/config.cjs'
+const { SECRET } = pkg
 
 export const login = async (req, res) => {
   const { username, password } = req.body
@@ -25,7 +27,7 @@ export const login = async (req, res) => {
     username,
     id: user.id
   }
-  const token = jwt.sign(userForToken, process.env.SECRET)
+  const token = jwt.sign(userForToken, SECRET)
 
   res.json({ token, username, id: user.id })
 }

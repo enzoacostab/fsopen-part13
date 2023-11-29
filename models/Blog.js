@@ -1,5 +1,5 @@
-import { sequelize } from '../db.js'
-import { DataTypes } from 'sequelize'
+import { sequelize } from '../util/db.cjs'
+import { DataTypes, Sequelize } from 'sequelize'
 
 const Blog = sequelize.define('blogs', {
   id: {
@@ -21,9 +21,24 @@ const Blog = sequelize.define('blogs', {
   likes: {
     type: DataTypes.SMALLINT,
     defaultValue: 0
+  },
+  year: {
+    type: DataTypes.INTEGER,
+    validate: {
+      min: 1991,
+      max: new Date().getFullYear()
+    }
+  },
+  createdAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+  },
+  updatedAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
   }
-}, {
-  timestamps: false
 })
 
 export default Blog

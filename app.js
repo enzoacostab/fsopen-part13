@@ -2,7 +2,7 @@ import express from 'express'
 import blogsRouter from './routes/blogs-routes.js'
 import usersRouter from './routes/users-routes.js'
 import loginRouter from './routes/login-routes.js'
-import { errorHandler, userExtractor } from './utils/middleware.js'
+import { errorHandler, userExtractor } from './util/middleware.js'
 import { getAuthors } from './controllers/authors-controller.js'
 
 const app = express()

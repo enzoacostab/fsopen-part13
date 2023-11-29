@@ -39,17 +39,17 @@ export const getBlogs = async (req, res, next) => {
 }
 
 export const createBlog = async (req, res, next) => {
-  const { title, author, url, likes } = req.body
+  const { title, author, url, likes, year } = req.body
 
   try {
     const user = req.user
-
     const newBlog = await Blog.create({
       userId: user.id,
       title,
       author,
       url,
-      likes
+      likes,
+      year
     })
 
     res.json(newBlog)

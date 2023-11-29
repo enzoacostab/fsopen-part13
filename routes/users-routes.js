@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { getUsers, createUser, updateUser } from '../controllers/users-controller.js'
-import { userExtractor } from '../utils/middleware.js'
+import { userExtractor } from '../util/middleware.js'
 
 const router = Router()
 router.post('/api/users', createUser)

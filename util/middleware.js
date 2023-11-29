@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
+import pkg from './config.cjs'
+const { SECRET } = pkg
 
 export const errorHandler = (error, req, res, next) => {
   console.error(error.message)
@@ -17,7 +19,7 @@ export const userExtractor = async (req, res, next) => {
   const token = req.get('authorization')
   if (token && token.startsWith('Bearer ')) {
     try {
-      const decodedToken = jwt.verify(token.substring(7), process.env.SECRET)
+      const decodedToken = jwt.verify(token.substring(7), SECRET)
       const user = await User.findByPk(decodedToken.id)
       req.user = user
     } catch (error) {
