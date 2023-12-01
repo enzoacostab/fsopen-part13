@@ -15,16 +15,18 @@ const CreateBlog = ({ createBlog }) => {
     setUrl('')
     setLikes(0)
   }
-  return <div>
-    <h2>create blog</h2>
-    <form onSubmit = { addBlog }>
-      <input id='title' type='text' placeholder='title' value={title} onChange={({ target }) => setTitle(target.value)}/><br/>
-      <input id='author' type='text' placeholder='author' value={author} onChange={({ target }) => setAuthor(target.value)}/><br/>
-      <input id='url' type='text' placeholder='url' value={url} onChange={({ target }) => setUrl(target.value)}/><br/>
-      <input id='likes' type='number' placeholder='likes' value={likes} onChange={({ target }) => setLikes(target.value)}/><br/>
-      <input id='create' value='create' type='submit'/>
-    </form>
-  </div>
+  return (
+    <div>
+      <h2>create blog</h2>
+      <form onSubmit = { addBlog }>
+        <input id='title' type='text' placeholder='title' value={title} onChange={({ target }) => setTitle(target.value)}/><br/>
+        <input id='author' type='text' placeholder='author' value={author} onChange={({ target }) => setAuthor(target.value)}/><br/>
+        <input id='url' type='text' placeholder='url' value={url} onChange={({ target }) => setUrl(target.value)}/><br/>
+        <input id='likes' type='number' placeholder='likes' value={likes} onChange={({ target }) => setLikes(target.value)}/><br/>
+        <input id='create' value='create' type='submit'/>
+      </form>
+    </div>
+  )
 }
 
 CreateBlog.propTypes = {

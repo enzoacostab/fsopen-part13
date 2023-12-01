@@ -5,12 +5,55 @@ import bcrypt from 'bcrypt'
 export const getUsers = async (req, res, next) => {
   try {
     const users = await User.findAll({
-      include: {
-        model: Blog
-      }
+      include: [{
+        model: Blog,
+        attributes: {
+          exclude: 'userId'
+        }
+      }, {
+        model: Blog,
+        as: 'readings',
+        through: {
+          attributes: []
+        }
+      }]
     })
 
     res.json(users)
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const getUser = async (req, res, next) => {
+  const where = {}
+
+  if (req.query.read) {
+    where.read = req.query.read === 'true'
+  }
+
+  try {
+    const { id } = req.params
+    const user = await User.findByPk(id, {
+      include: [{
+        model: Blog,
+        attributes: {
+          exclude: 'userId'
+        }
+      }, {
+        model: Blog,
+        as: 'readings',
+        attributes: {
+          exclude: 'userId'
+        },
+        through: {
+          attributes: ['read', 'id'],
+          where
+        }
+      }]
+    })
+
+    res.json(user)
   } catch (error) {
     next(error)
   }

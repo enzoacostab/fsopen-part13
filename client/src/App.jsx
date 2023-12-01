@@ -10,14 +10,16 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [msg, setMsg] = useState('')
   const [visible, setVisible] = useState(false)
-  const [auth, setAuth] = useState()
+  const [auth, setAuth] = useState(null)
   const message = document.getElementById('msg')
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs)
-    )
-  }, [])
+    if (auth) {
+      blogService.getAll(auth).then(blogs =>
+        setBlogs(blogs)
+      )
+    }
+  }, [auth])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -51,7 +53,7 @@ const App = () => {
   const like = async (data) => {
     try {
       data.likes++
-      await blogService.like(data)
+      await blogService.like(data, auth)
       setMsg('liked')
       message.classList.add('done')
       setTimeout(() => {
@@ -89,8 +91,11 @@ const App = () => {
   }
 
   if (user) {
-    return <Blogs remove={remove} like={like} vis={{ val: visible, set: setVisible }} msg={msg} user={user} blogs={blogs}>
-    <CreateBlog createBlog={addBlog}/></Blogs>
+    return (
+      <Blogs remove={remove} like={like} vis={{ val: visible, set: setVisible }} msg={msg} user={user} blogs={blogs}>
+        <CreateBlog createBlog={addBlog}/>
+      </Blogs>
+    )
   } else {
     return <Login msg={msg} setMsg={setMsg} setAuth={setAuth} setUser={setUser}/>
   }

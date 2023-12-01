@@ -57,29 +57,31 @@ const Login = ({ msg, setMsg, setAuth, setUser }) => {
 
   if (form === 'login') {
     return (
-    <div>
-      <h2>Log in to application</h2>
-      <h3 id='msg'>{msg}</h3>
-      <form onSubmit={handleLogin}>
-        <input id='username' type='text' placeholder='username' value={username} onChange={({ target }) => setUsername(target.value)}/>
-        <input id='password' type='password' placeholder='password' value={password} onChange={({ target }) => setPassword(target.value)}/>
-        <input id='login' value='login' type='submit'/>
-        <button onClick={() => setForm('register')}>register</button>
-      </form>
-    </div>)
+      <div>
+        <h2>Log in to application</h2>
+        <h3 id='msg'>{msg}</h3>
+        <form onSubmit={handleLogin}>
+          <input id='username' type='text' placeholder='username' value={username} onChange={({ target }) => setUsername(target.value)}/>
+          <input id='password' type='password' placeholder='password' value={password} onChange={({ target }) => setPassword(target.value)}/>
+          <input id='login' value='login' type='submit'/>
+          <button onClick={() => setForm('register')}>register</button>
+        </form>
+      </div>
+    )
   } else {
     return (
-    <div>
-      <h2>Register</h2>
-        <h3 id='msg'>{msg}</h3>
-        <form onSubmit={handleRegister}>
-        <input id='username' type='text' placeholder='username' value={username} onChange={({ target }) => setUsername(target.value)}/>
-        <input id='name' type='text' placeholder='name' value={name} onChange={({ target }) => setName(target.value)}/>
-          <input id='password' type='password' placeholder='password' value={password} onChange={({ target }) => setPassword(target.value)}/>
-          <input id='register' value='register' type='submit'/>
-          <button onClick={() => setForm('login')}>login</button>
-        </form>
-    </div>)
+      <div>
+        <h2>Register</h2>
+          <h3 id='msg'>{msg}</h3>
+          <form onSubmit={handleRegister}>
+          <input id='username' type='text' placeholder='username' value={username} onChange={({ target }) => setUsername(target.value)}/>
+          <input id='name' type='text' placeholder='name' value={name} onChange={({ target }) => setName(target.value)}/>
+            <input id='password' type='password' placeholder='password' value={password} onChange={({ target }) => setPassword(target.value)}/>
+            <input id='register' value='register' type='submit'/>
+            <button onClick={() => setForm('login')}>login</button>
+          </form>
+      </div>
+    )
   }
 }
 

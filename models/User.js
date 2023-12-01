@@ -1,6 +1,7 @@
 import { sequelize } from '../util/db.cjs'
 import { DataTypes, Sequelize } from 'sequelize'
 import Blog from './Blog.js'
+import ReadingList from './ReadingList.js'
 
 const User = sequelize.define('users', {
   id: {
@@ -44,5 +45,8 @@ Blog.belongsTo(User, {
   foreignKey: 'userId',
   targetKey: 'id'
 })
+
+User.belongsToMany(Blog, { through: ReadingList, as: 'readings' })
+Blog.belongsToMany(User, { through: ReadingList, as: 'readings' })
 
 export default User

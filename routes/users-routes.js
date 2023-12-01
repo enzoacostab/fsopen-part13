@@ -1,10 +1,12 @@
 import { Router } from 'express'
-import { getUsers, createUser, updateUser } from '../controllers/users-controller.js'
+import { getUsers, createUser, updateUser, getUser } from '../controllers/users-controller.js'
 import { userExtractor } from '../util/middleware.js'
 
 const router = Router()
 router.post('/api/users', createUser)
-router.get('/api/users', userExtractor, getUsers)
-router.put('/api/users/:username', userExtractor, updateUser)
+router.use(userExtractor)
+router.get('/api/users', getUsers)
+router.get('/api/users/:id', getUser)
+router.put('/api/users/:username', updateUser)
 
 export default router

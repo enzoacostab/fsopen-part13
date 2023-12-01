@@ -22,10 +22,17 @@ export const getBlogs = async (req, res, next) => {
 
     const blogs = await Blog.findAll({
       attributes: { exclude: ['userId'] },
-      include: {
+      include: [{
         model: User,
         attributes: ['name']
-      },
+      }, {
+        model: User,
+        as: 'readings',
+        attributes: ['id', 'username'],
+        through: {
+          attributes: []
+        }
+      }],
       where,
       order: [
         ['likes', 'DESC']

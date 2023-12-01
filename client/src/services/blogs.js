@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-const baseUrl = 'https://fsopen-part13.vercel.app/api/blogs'
-const getAll = async () => {
+const baseUrl = '/api/blogs'
+const getAll = async (auth) => {
   try {
-    const request = await axios.get(baseUrl)
+    const request = await axios.get(baseUrl, auth)
     return request.data
   } catch (e) {
     console.error(e)
@@ -17,9 +17,9 @@ const create = async (data, auth) => {
     console.error(e)
   }
 }
-const like = async (data) => {
+const like = async (data, auth) => {
   try {
-    const request = await axios.put(`${baseUrl}/${data.id}`, data)
+    const request = await axios.put(`${baseUrl}/${data.id}`, data, auth)
     return request.data
   } catch (e) {
     console.error(e)
