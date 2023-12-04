@@ -2,6 +2,7 @@ import { sequelize } from '../util/db.cjs'
 import { DataTypes, Sequelize } from 'sequelize'
 import Blog from './Blog.js'
 import ReadingList from './ReadingList.js'
+import ActiveSession from './ActiveSessions.js'
 
 const User = sequelize.define('users', {
   id: {
@@ -25,6 +26,10 @@ const User = sequelize.define('users', {
     type: DataTypes.STRING,
     allowNull: false
   },
+  disabled: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
@@ -44,6 +49,15 @@ User.hasMany(Blog, {
 Blog.belongsTo(User, {
   foreignKey: 'userId',
   targetKey: 'id'
+})
+
+User.hasOne(ActiveSession, {
+  foreignKey: 'userId',
+  sourceKey: 'id'
+})
+ActiveSession.belongsTo(User, {
+  foreignKey: 'userId',
+  sourceKey: 'id'
 })
 
 User.belongsToMany(Blog, { through: ReadingList, as: 'readings' })

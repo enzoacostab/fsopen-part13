@@ -1,7 +1,5 @@
-import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
-import pkg from './config.cjs'
-const { SECRET } = pkg
+import ActiveSession from '../models/ActiveSessions.js'
 
 export const errorHandler = (error, req, res, next) => {
   console.error(error.message)
@@ -19,11 +17,17 @@ export const userExtractor = async (req, res, next) => {
   const token = req.get('authorization')
   if (token && token.startsWith('Bearer ')) {
     try {
-      const decodedToken = jwt.verify(token.substring(7), SECRET)
-      const user = await User.findByPk(decodedToken.id)
-      req.user = user
+      const session = await ActiveSession.findOne({
+        include: {
+          model: User
+        },
+        where: {
+          token: token.substring(7)
+        }
+      })
+
+      req.user = session.user
     } catch (error) {
-      console.error(error.message)
       return res.status(401).json({ error: 'token invalid' })
     }
   } else {
